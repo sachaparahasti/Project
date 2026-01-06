@@ -1,39 +1,44 @@
 import React, { useState } from "react";
-import "./LoanCalculator.css";
+import "./SipCalculator.css";
 
 function SipCalculator() {
-  const [monthlyAmount, setMonthlyAmount] = useState("");
-  const [returnRate, setReturnRate] = useState("");
-  const [tenure, setTenure] = useState("");
-  const [tenureUnit, setTenureUnit] = useState("years");
+  // State for SIP inputs
+  const [monthlyInvestment, setMonthlyInvestment] = useState("");
+  const [annualReturnRate, setAnnualReturnRate] = useState("");
+  const [investmentDuration, setInvestmentDuration] = useState("");
+  const [durationUnit, setDurationUnit] = useState("years"); // "years" or "months"
   const [result, setResult] = useState(null);
 
+  // Calculate SIP returns
   const calculateSIP = () => {
-    let monthly = Number(monthlyAmount);
-    let rate = Number(returnRate);
-    let months = Number(tenure);
+    const monthly = Number(monthlyInvestment);
+    const rate = Number(annualReturnRate);
+    let months = Number(investmentDuration);
 
-    // validation
+    // Validate inputs
     if (monthly <= 0 || rate <= 0 || months <= 0) {
-      alert("Please enter valid values");
+      alert("Please enter valid positive values for all fields.");
       return;
     }
 
-    // convert years to months
-    if (tenureUnit === "years") {
+    // Convert years to months if needed
+    if (durationUnit === "years") {
       months = months * 12;
     }
 
-    let monthlyRate = rate / 12 / 100;
+    // Calculate monthly rate (as a decimal)
+    const monthlyRate = rate / 12 / 100;
 
-    let futureValue =
+    // Calculate future value using SIP formula
+    const futureValue =
       monthly *
-      ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
-      (1 + monthlyRate);
+      (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate));
 
-    let totalInvestment = monthly * months;
-    let totalReturns = futureValue - totalInvestment;
+    // Calculate total investment and returns
+    const totalInvestment = monthly * months;
+    const totalReturns = futureValue - totalInvestment;
 
+    // Set result with 2 decimal places
     setResult({
       futureValue: futureValue.toFixed(2),
       totalInvestment: totalInvestment.toFixed(2),
@@ -50,8 +55,8 @@ function SipCalculator() {
         <input
           type="number"
           placeholder="e.g. 5000"
-          value={monthlyAmount}
-          onChange={(e) => setMonthlyAmount(e.target.value)}
+          value={monthlyInvestment}
+          onChange={(e) => setMonthlyInvestment(e.target.value)}
         />
       </div>
 
@@ -60,8 +65,8 @@ function SipCalculator() {
         <input
           type="number"
           placeholder="e.g. 12"
-          value={returnRate}
-          onChange={(e) => setReturnRate(e.target.value)}
+          value={annualReturnRate}
+          onChange={(e) => setAnnualReturnRate(e.target.value)}
         />
       </div>
 
@@ -71,14 +76,10 @@ function SipCalculator() {
           <input
             type="number"
             placeholder="e.g. 10"
-            value={tenure}
-            onChange={(e) => setTenure(e.target.value)}
-            required
+            value={investmentDuration}
+            onChange={(e) => setInvestmentDuration(e.target.value)}
           />
-          <select
-            value={tenureUnit}
-            onChange={(e) => setTenureUnit(e.target.value)}
-          >
+          <select value={durationUnit} onChange={(e) => setDurationUnit(e.target.value)}>
             <option value="years">Years</option>
             <option value="months">Months</option>
           </select>

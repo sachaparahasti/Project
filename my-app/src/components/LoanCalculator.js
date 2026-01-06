@@ -2,43 +2,49 @@ import React, { useState } from 'react';
 import './LoanCalculator.css';
 
 function LoanCalculator() {
+  // State for loan inputs
   const [loanAmount, setLoanAmount] = useState('');
   const [interestRate, setInterestRate] = useState('');
-  const [tenure, setTenure] = useState('');
-  const [tenureUnit, setTenureUnit] = useState('years');
+  const [loanTenure, setLoanTenure] = useState('');
+  const [tenureUnit, setTenureUnit] = useState('years'); // 'years' or 'months'
   const [result, setResult] = useState(null);
 
-   const calculateEMI = () => {
-  const P = Number(loanAmount);
-  const annualRate = Number(interestRate);
-  let N = Number(tenure);
+  // Calculate EMI using loan formula
+  const calculateEMI = () => {
+    const principal = Number(loanAmount);
+    const annualRate = Number(interestRate);
+    let tenureInMonths = Number(loanTenure);
 
-  if (P <= 0 || annualRate <= 0 || N <= 0) {
-    alert("Please enter valid values");
-    return;
-  }
+    // Validate inputs
+    if (principal <= 0 || annualRate <= 0 || tenureInMonths <= 0) {
+      alert('Please enter valid positive values for all fields.');
+      return;
+    }
 
-  // years → months
-  if (tenureUnit === "years") {
-    N = N * 12;
-  }
+    // Convert years to months if needed
+    if (tenureUnit === 'years') {
+      tenureInMonths = tenureInMonths * 12;
+    }
 
-  const R = annualRate / 12 / 100;
+    // Calculate monthly interest rate (as a decimal)
+    const monthlyRate = annualRate / 12 / 100;
 
-  const emi =
-    (P * R * Math.pow(1 + R, N)) /
-    (Math.pow(1 + R, N) - 1);
+    // Calculate EMI using the standard formula
+    const emi =
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, tenureInMonths)) /
+      (Math.pow(1 + monthlyRate, tenureInMonths) - 1);
 
-  const totalAmount = emi * N;
-  const totalInterest = totalAmount - P;
+    // Calculate total payable amount and total interest
+    const totalAmount = emi * tenureInMonths;
+    const totalInterest = totalAmount - principal;
 
-  setResult({
-    emi: emi.toFixed(2),
-    totalInterest: totalInterest.toFixed(2),
-    totalAmount: totalAmount.toFixed(2),
-  });
-};
-
+    // Set result with 2 decimal places
+    setResult({
+      emi: emi.toFixed(2),
+      totalInterest: totalInterest.toFixed(2),
+      totalAmount: totalAmount.toFixed(2),
+    });
+  };
 
   return (
     <div className="calculator-container">
@@ -72,8 +78,8 @@ function LoanCalculator() {
           <input
             type="number"
             placeholder="e.g. 5"
-            value={tenure}
-            onChange={(e) => setTenure(e.target.value)}
+            value={loanTenure}
+            onChange={(e) => setLoanTenure(e.target.value)}
             required
           />
           <select value={tenureUnit} onChange={(e) => setTenureUnit(e.target.value)}>
