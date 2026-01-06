@@ -125,6 +125,10 @@ Navigation & Layout
         Responsive for mobile, tablet, and desktop
 
 3. Screenshots (Description)
+    C:\project\my-app\images\home_screen.png
+    C:\project\my-app\images\loan_calculate.png
+    C:\project\my-app\images\sip_calculate.png
+
 1. Home Screen
 
     Top navigation bar with app title “Loan & SIP Calculator” and links to Loan Calculator and SIP Calculator
