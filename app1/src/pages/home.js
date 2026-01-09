@@ -6,7 +6,7 @@ export default function Home() {
   {/* Header */}
   <header className="bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg sticky top-0 z-10">
     <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 className="text-2xl font-bold">Hasti Patel</h1>
+      <h1 className="text-2xl font-bold">Portfolio</h1>
       <nav className="space-x-8 hidden md:flex">
         <Link to="/" className="hover:underline font-medium">Home</Link>
         <Link to="/aboutus" className="hover:underline">About Us</Link>
