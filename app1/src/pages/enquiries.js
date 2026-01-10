@@ -2,22 +2,25 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+// ✅ Use environment variable for backend API
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function Enquiries() {
   const [enquiries, setEnquiries] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch enquiries from MySQL backend
+  // Fetch enquiries from backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://backend-pphu.onrender.com/api/enquiries"
-        );
+        const response = await axios.get(`${API_URL}/api/enquiries`);
         setEnquiries(response.data.data || []);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching enquiries:", error);
-        alert("Failed to load enquiries. Is backend running?");
+        alert(
+          "Failed to load enquiries. Backend might not be running or CORS issue."
+        );
+      } finally {
         setLoading(false);
       }
     };
