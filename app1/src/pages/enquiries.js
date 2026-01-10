@@ -10,7 +10,9 @@ export default function Enquiries() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/enquiries");
+        const response = await axios.get(
+          "https://backend-pphu.onrender.com/api/enquiries"
+        );
         setEnquiries(response.data.data || []);
         setLoading(false);
       } catch (error) {
@@ -30,11 +32,21 @@ export default function Enquiries() {
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">Portfolio</h1>
           <nav className="space-x-8 hidden md:flex">
-            <Link to="/" className="hover:underline">Home</Link>
-            <Link to="/aboutus" className="hover:underline">About Us</Link>
-            <Link to="/projects" className="hover:underline">Projects</Link>
-            <Link to="/contact" className="hover:underline">Contact Us</Link>
-            <Link to="/enquiries" className="hover:underline font-medium">Enquiries</Link>
+            <Link to="/" className="hover:underline">
+              Home
+            </Link>
+            <Link to="/aboutus" className="hover:underline">
+              About Us
+            </Link>
+            <Link to="/projects" className="hover:underline">
+              Projects
+            </Link>
+            <Link to="/contact" className="hover:underline">
+              Contact Us
+            </Link>
+            <Link to="/enquiries" className="hover:underline font-medium">
+              Enquiries
+            </Link>
           </nav>
         </div>
       </header>
@@ -66,12 +78,17 @@ export default function Enquiries() {
                 </thead>
                 <tbody>
                   {enquiries.map((enq) => (
-                    <tr key={enq.id} className="border-b hover:bg-gray-100 transition">
+                    <tr
+                      key={enq.id}
+                      className="border-b hover:bg-gray-100 transition"
+                    >
                       <td className="p-6">{enq.clientName}</td>
                       <td className="p-6">{enq.projectName}</td>
                       <td className="p-6">{enq.phone}</td>
                       <td className="p-6">{enq.budget}</td>
-                      <td className="p-6">{new Date(enq.createdAt).toLocaleString()}</td>
+                      <td className="p-6">
+                        {new Date(enq.createdAt).toLocaleString()}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
