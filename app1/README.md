@@ -30,14 +30,13 @@ Modern full-stack personal portfolio with enquiry management.
 
 Frontend:
 
-cd frontend
+cd app1
 npm install
 npm start
 
 
 Backend: http://localhost:5000
 Frontend: http://localhost:3000
-
 
 
 
